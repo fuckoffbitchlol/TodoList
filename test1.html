@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div id = "app">
+    <p>this is Hang's todo list</p>
+    <input type = "text" placeholder="add someshit"
+    class = "edit" autofocus
+    v-model="items.content"
+    @keydown.enter="addTask"
+    >
+    <ol>
+    <li v-for="(item, index) in todoList">
+        <span>{{item.content}}</span>
+        <button @click="removeList(index)" class ="del">delete</button>
+    </li>
+   </ol>
+    </div>
+</body>
+<script src = "js/vue.min.js"></script>
+<!--vue js code here-->
+<script>
+    // Vue.component("todo-item",{
+    //     // what is this for
+    //     props: ["todo", "removeList"],
+    //     template: "<li><button @click = 'removeList' class='del'>delete</button><span>{{todo.content}}</li>"
+    // })
+
+    var vm = new Vue({
+        el: "#app",
+        data:{
+            items:{
+                content: "",
+                finished: false,
+                deleted: false,
+                order: 1
+            },
+            todoList:[]
+        },
+        methods:{
+            addTask(){
+                this.todoList.push(this.items);
+                this.items={
+                    content:"",
+                    finished:false,
+                    deleted:false,
+                    order: 1
+                }
+            },
+            changeState(index){
+                let curState = this.list[index].finished;
+                this.todoList[index].finished = !curState;
+            },
+            removeList(index){
+                this.todoList.splice(index, 1);
+            }
+        }
+    })
+</script>
+</html>
